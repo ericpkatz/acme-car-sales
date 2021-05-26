@@ -9,6 +9,8 @@ app.use(express.json());
 
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, 'index.html')));
 
+app.use('/dist', express.static(path.join(__dirname, 'dist')));
+
 app.post('/api/sales', async(req, res, next)=> {
   try {
     res.status(201).send(await Sale.create(req.body));

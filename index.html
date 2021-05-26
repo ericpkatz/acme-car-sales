@@ -1,17 +1,37 @@
 <html>
   <head>
+    <script src='/dist/main.js' defer></script>
+    <title>Acme Auto Sales</title>
+    <style>
+      body {
+        padding: 1rem;
+        font-family: verdana;
+      }
+      main {
+        display: flex;
+      }
+      section {
+        flex: 1;
+      }
+    </style>
   </head>
   <body>
     <h1>Acme Car Sales</h1>
     <main>
       <section>
         <h1>Users</h1>
+        <ul id='users-list'>
+        </ul>
       </section>
       <section>
         <h1>Cars</h1>
+        <ul id='cars-list'>
+        </ul>
       </section>
       <section>
         <h1>Sales</h1>
+        <ul id='sales-list'>
+        </ul>
       </section>
     </main>
   </body>
