@@ -1,10 +1,13 @@
 //used for printing colors in console.log
 const chalk = require('chalk');
 const express = require('express');
+const path = require('path');
 const { syncAndSeed, models: {  User, Sale, Car} } = require('./db');
 
 const app = express();
 app.use(express.json());
+
+app.get('/', (req, res)=> res.sendFile(path.join(__dirname, 'index.html')));
 
 app.post('/api/sales', async(req, res, next)=> {
   try {
