@@ -11,9 +11,9 @@ app.get('/', (req, res)=> res.sendFile(path.join(__dirname, 'index.html')));
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
-app.post('/api/sales', async(req, res, next)=> {
+app.post('/api/users/:id/sales', async(req, res, next)=> {
   try {
-    res.status(201).send(await Sale.create(req.body));
+    res.status(201).send(await Sale.create({ userId: req.params.id, ...req.body }));
   }
   catch(ex){
     next(ex);
@@ -49,9 +49,14 @@ app.get('/api/cars', async(req, res, next)=> {
   }
 });
 
-app.get('/api/sales', async(req, res, next)=> {
+app.get('/api/users/:id/sales', async(req, res, next)=> {
   try {
-    res.send(await Sale.findAll());
+    res.send(await Sale.findAll({
+      where: {
+        userId: req.params.id
+      },
+      include: [ Car ]
+    }));
   }
   catch(ex){
     next(ex);
@@ -61,9 +66,9 @@ app.get('/api/sales', async(req, res, next)=> {
 
 const init = async()=> {
   try {
-    if(process.env.SEED === 'true'){
+    //if(process.env.SEED === 'true'){
       await syncAndSeed();
-    }
+    //}
     const port = process.env.PORT || 3000;
     app.listen(port, ()=> console.log(chalk.green(`listening on port ${port}`)));
   }
